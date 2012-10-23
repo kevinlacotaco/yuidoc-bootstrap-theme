@@ -1,11 +1,30 @@
 /*
  * Custom styles for the YUIDoc Bootstrap Theme
  * Authors: kevinlacotaco
- *			tonybaroneee
+ *            tonybaroneee
  */
 
 /* -- Navigation Bar -------------------------------------------------------- */
 
 .navbar-form {
     margin-right: 3px;
+}
+
+/* -- Sidebar --------------------------------------------------------------- */
+
+#api-tab-content {
+    border: 1px solid #DFDFDF;
+    border-top: 0px;
+    -webkit-border-radius: 0 0 4px 4px;
+    -moz-border-radius: 0 0 4px 4px;
+    border-radius: 0 0 4px 4px;
+}
+
+#api-filter {
+    width: 94.5%;
+}
+
+.content h1:first-child {
+    padding-top: 22px;
+    padding-bottom: 15px;
 }
