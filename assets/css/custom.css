@@ -1,13 +1,17 @@
 /*
  * Custom styles for the YUIDoc Bootstrap Theme
  * Authors: kevinlacotaco
- *            tonybaroneee
+ *          tonybaroneee
  */
 
 /* -- Navigation Bar -------------------------------------------------------- */
 
 .navbar-form {
     margin-right: 3px;
+}
+
+#options-form {
+    padding: 10px 20px 0 0;
 }
 
 /* -- Sidebar --------------------------------------------------------------- */
@@ -23,6 +27,8 @@
 #api-filter {
     width: 94.5%;
 }
+
+/* -- Content --------------------------------------------------------------- */
 
 .content h1:first-child {
     padding-top: 22px;
