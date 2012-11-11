@@ -41,7 +41,7 @@
 </div>
 
 {{#if deprecated}}
-    <div class="box deprecated">
+    <div class="well well-small">
         <p>
         {{#if deprecationMessage}}
             <strong>Deprecated:</strong> {{deprecationMessage}}
@@ -52,7 +52,7 @@
     </div>
 {{/if}}
 
-<div class="box intro">
+<div class="well well-small">
     {{{classDescription}}}
 </div>
 
@@ -63,26 +63,26 @@
     </div>
 {{/is_constructor}}
 
-<div id="classdocs" class="tabview">
-    <ul class="api-class-tabs">
-        <li class="api-class-tab index"><a href="#index">Index</a></li>
+<div>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#index">Index</a></li>
 
         {{#if methods}}
-            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+            <li><a data-toggle="tab" href="#methods">Methods</a></li>
         {{/if}}
         {{#if properties}}
-            <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
+            <li><a data-toggle="tab" href="#properties">Properties</a></li>
         {{/if}}
         {{#if attrs}}
-            <li class="api-class-tab attrs"><a href="#attrs">Attributes</a></li>
+            <li><a data-toggle="tab" href="#attrs">Attributes</a></li>
         {{/if}}
         {{#if events}}
-            <li class="api-class-tab events"><a href="#events">Events</a></li>
+            <li><a data-toggle="tab" href="#events">Events</a></li>
         {{/if}}
     </ul>
 
-    <div>
-        <div id="index" class="api-class-tabpanel index">
+    <div class="tab-content">
+        <div id="index" class="tab-pane active">
             <h2 class="off-left">Item Index</h2>
 
             {{#if methods}}
@@ -164,7 +164,7 @@
         </div>
 
         {{#if methods}}
-            <div id="methods" class="api-class-tabpanel">
+            <div id="methods" class="tab-pane">
                 <h2 class="off-left">Methods</h2>
 
                 {{#methods}}
@@ -174,7 +174,7 @@
         {{/if}}
 
         {{#if properties}}
-            <div id="properties" class="api-class-tabpanel">
+            <div id="properties" class="tab-pane">
                 <h2 class="off-left">Properties</h2>
 
                 {{#properties}}
@@ -184,7 +184,7 @@
         {{/if}}
 
         {{#if attrs}}
-            <div id="attrs" class="api-class-tabpanel">
+            <div id="attrs" class="tab-pane">
                 <h2 class="off-left">Attributes</h2>
 
                 {{#attrs}}
@@ -194,7 +194,7 @@
         {{/if}}
 
         {{#if events}}
-            <div id="events" class="api-class-tabpanel">
+            <div id="events" class="tab-pane">
                 <h2 class="off-left">Events</h2>
 
                 {{#events}}
