@@ -96,6 +96,7 @@ $(function() {
                                     .parent('li').index() + 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
+                e.preventDefault();
             } else if (e.keyCode === 38) { // up arrow
                 if ($('#api-tabview-filter input').is(':focus')) {
                     // Scenario 1: We're focused on the search input; move down to the last li
@@ -111,6 +112,7 @@ $(function() {
                                     .parent('li').index() - 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
+                e.preventDefault();
             }
         }
     })
