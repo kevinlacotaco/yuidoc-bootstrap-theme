@@ -112,7 +112,6 @@ $(function() {
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
             }
-            return false;
         }
     })
 
