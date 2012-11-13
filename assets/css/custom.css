@@ -52,6 +52,10 @@
     margin-top: 65px;
 }
 
+.content {
+    padding-bottom: 50px;
+}
+
 .content .page-header h1 small {
     padding-left: 5px;
 }
