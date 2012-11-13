@@ -6,6 +6,19 @@
 
 /* -- Navigation Bar -------------------------------------------------------- */
 
+.navbar .navbar-inner .brand {
+    height: 40px;
+    margin: 0;
+    padding: 0 5px 0 10px;
+    cursor: default;
+}
+
+.navbar-text {
+    font-size: 12px;
+    padding-left: 5px;
+    cursor: default;
+}
+
 .navbar-form {
     margin-right: 3px;
 }
