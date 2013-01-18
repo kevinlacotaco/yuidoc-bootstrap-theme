@@ -12,13 +12,13 @@ $(function() {
     // ************************************************************************* //
 
     function setUpActiveTab() {
-        if(localStorage['main-nav'] !== null){
+        if(localStorage.getItem('main-nav')){
             $('a[href="'+ localStorage['main-nav'] + '"]').tab('show');
         }
     }
 
     function setUpOptionsCheckboxes() {
-        if(localStorage['options'] !== null){
+        if(localStorage.getItem('options')){
             var optionsArr = JSON.parse(localStorage['options']);
             var optionsForm = $('#options-form');
 
