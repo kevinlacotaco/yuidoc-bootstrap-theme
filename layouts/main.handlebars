@@ -14,7 +14,7 @@
 <body class="yui3-skin-sam" style="padding-top:40px;">
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <a class="brand" href="/" style="height:20px;">
+        <a class="brand" href="/" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
         {{#if projectLogo}}
 	    <img src="{{projectLogo}}" style="height:20px;" title="{{projectName}}">
         {{else}}
@@ -29,8 +29,8 @@
                 </p>
             </li>
         </div>
-        <form class="navbar-form pull-right">
-            <input type="text" class="search-query" placeholder="Search for classes/modules...">
+        <form class="navbar-form pull-right" style="line-height: 40px; height: 40px;">
+            <input style="margin-top: 0;" type="text" class="search-query" placeholder="Search for classes/modules..." data-obj='[{{#search classes allModules}}{{/search}}]'>
         </form>
     </div>
 </div>

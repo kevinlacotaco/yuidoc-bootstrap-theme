@@ -92,7 +92,7 @@
                     <ul class="index-list methods{{#if extends}} extends{{/if}}">
                         {{#methods}}
                             <li class="index-item method{{#if access}} {{access}}{{/if}}{{#if deprecated}} deprecated{{/if}}{{#if overwritten_from}} inherited{{/if}}{{#if extended_from}} inherited{{/if}}">
-                                <a href="#method_{{name}}">{{name}}</a>
+                                <a href="#" data-tabid="#methods" data-anchor="#method_{{name}}" data-tablink="{{name}}">{{name}}</a>
 
                                 {{#if static}}
                                     <span class="flag static">static</span>
@@ -113,7 +113,7 @@
                     <ul class="index-list properties{{#if extends}} extends{{/if}}">
                         {{#properties}}
                             <li class="index-item property{{#if access}} {{access}}{{/if}}{{#if deprecated}} deprecated{{/if}}{{#if overwritten_from}} inherited{{/if}}{{#if extended_from}} inherited{{/if}}">
-                                <a href="#property_{{name}}">{{name}}</a>
+                                <a href="#" data-tabid="#properties" data-anchor="#property_{{name}}" data-tablink="{{name}}">{{name}}</a>
 
                                 {{#if static}}
                                     <span class="flag static">static</span>
@@ -134,7 +134,7 @@
                     <ul class="index-list attrs{{#if extends}} extends{{/if}}">
                         {{#attrs}}
                             <li class="index-item attr{{#if access}} {{access}}{{/if}}{{#if deprecated}} deprecated{{/if}}{{#if overwritten_from}} inherited{{/if}}{{#if extended_from}} inherited{{/if}}">
-                                <a href="#attr_{{name}}">{{name}}</a>
+                                <a href="#" data-tabid="#attrs" data-anchor="#attr_{{name}}" data-tablink="{{name}}">{{name}}</a>
                             </li>
                         {{/attrs}}
                     </ul>
@@ -148,7 +148,7 @@
                     <ul class="index-list events{{#if extends}} extends{{/if}}">
                         {{#events}}
                             <li class="index-item event{{#if access}} {{access}}{{/if}}{{#if deprecated}} deprecated{{/if}}{{#if overwritten_from}} inherited{{/if}}{{#if extended_from}} inherited{{/if}}">
-                                <a href="#event_{{name}}">{{name}}</a>
+                                <a href="#" data-tabid="#events" data-anchor="#event_{{name}}" data-tablink="{{name}}">{{name}}</a>
 
                                 {{#if static}}
                                     <span class="flag static">static</span>
