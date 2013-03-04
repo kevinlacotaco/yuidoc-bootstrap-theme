@@ -12,8 +12,21 @@ $(function() {
     // ************************************************************************* //
 
     function setUpActiveTab() {
-        if(localStorage['main-nav'] !== null){
+        if(localStorage.getItem('main-nav')){
             $('a[href="'+ localStorage['main-nav'] + '"]').tab('show');
+        }
+    }
+
+    function setUpOptionsCheckboxes() {
+        if(localStorage.getItem('options')){
+            var optionsArr = JSON.parse(localStorage['options']);
+            var optionsForm = $('#options-form');
+
+            for(var i=0;i<optionsArr.length;i++){
+                var box = optionsForm.find('input:checkbox').eq(i);
+                box.prop('checked', optionsArr[i]);
+                setOptionDisplayState(box);
+            }
         }
     }
 
@@ -51,90 +64,88 @@ $(function() {
         });
     }
 
-    function bindEventsForPage() {
-        $('#main-nav li').on('click', function(event) {
-            localStorage['main-nav'] = $(this).find('a').attr('href'); 
-            event.preventDefault();
-        });
-        $('#main-nav li').on('shown', function(event) {
-            setUpWidgets();
-            event.preventDefault();
-        });
-
-        $('#api-show-protected').on('change', function() {
-            if($(this).is(':checked')) {
-                $('.protected').toggle($(this).is(true));
-                $('.inherited').toggle($('#api-show-inherited').is(':checked'));
-                $('.deprecated').toggle($('#api-show-deprecated').is(':checked'));
-            } else {
-                $('.protected').toggle(false);
-            }
-        });
-
-        $('#api-show-private').on('change', function() {
-            if($(this).is(':checked')) {
-                $('.private').toggle(true);
-                $('.inherited').toggle($('#api-show-inherited').is(':checked'));
-                $('.deprecated').toggle($('#api-show-deprecated').is(':checked'));
-            } else {
-                $('.private').toggle(false);
-            }
-        });
-
-        $('#api-show-deprecated').on('change', function() {
-            if($(this).is(':checked')) {
-                $('.deprecated').toggle(true);
-                $('.inherited').toggle($('#api-show-inherited').is(':checked'));
-            } else {
-                $('.deprecated').toggle(false);
-            }
-        });
-
-        $('#api-show-inherited').on('change', function() {
-            if($(this).is(':checked')) {
-                $('.inherited').toggle(true);
-                $('.deprecated').toggle($('#api-show-deprecated').is(':checked'));
-                $('.private').toggle($('#api-show-private').is(':checked'));
-                $('.protected').toggle($('#api-show-protected').is(':checked'));
-            } else {
-                $('.inherited').toggle(false);
-            }
-        });
-
-        $('[data-tabid]').on('click', function(event) {
-            var tabToActivate = $(this).attr('data-tabid'),
-                anchor = $(this).attr('data-anchor');
-            event.preventDefault();
-            $('[data-toggle=tab][href="'+ tabToActivate + '"]').click();
-            $(document).scrollTop( $(anchor).offset().top );
-        });
+    function setOptionDisplayState(box) {
+        var cssName = $.trim(box.parent('label').text()).toLowerCase();
+        console.log(cssName);
+        if(box.is(':checked')){
+            $('div.'+cssName).css('display', 'block');
+            $('li.'+cssName).css('display', 'block');
+            $('span.'+cssName).css('display', 'inline');
+        }else{
+            $('.'+cssName).css('display', 'none');
+        }
     }
 
+    $('[data-tabid]').on('click', function(event) {
+        var tabToActivate = $(this).attr('data-tabid'),
+            anchor = $(this).attr('data-anchor');
+        event.preventDefault();
+        $('[data-toggle=tab][href="'+ tabToActivate + '"]').click();
+        $(document).scrollTop( $(anchor).offset().top );
+    });
 
     // ************************************************************************* //
     //  Initializations + Event listeners
     // ************************************************************************* //
 
+    //
+    // Store last clicked tab in local storage
+    //
+    $('#main-nav li').on('click', function(e) {
+        e.preventDefault();
+        localStorage['main-nav'] = $(this).find('a').attr('href'); 
+    });
+
+    //
+    // Refresh typeahead source arrays when user changes tabs
+    //
+    $('#main-nav li').on('shown', function(e) {
+        e.preventDefault();
+        setUpWidgets();
+    });
+
+    //
+    // Bind change events for options form checkboxes
+    //
+    $('#options-form input:checkbox').on('change', function(){
+        setOptionDisplayState($(this));
+
+        // Update localstorage
+        var optionsArr = []
+        $('#options-form input:checkbox').each(function(i,el) {
+            optionsArr.push($(el).is(':checked'));
+        });
+        localStorage['options'] = JSON.stringify(optionsArr);
+    });
+
+    //
+    // Keyboard shortcut - 's' key
+    // This brings the api search input into focus.
+    //
     $(window).keyup(function(e) {
         // Listen for 's' key and focus search input if pressed
-        if (e.keyCode === 83) { // 's'
+        if(e.keyCode === 83){ // 's'
             $('#api-tabview-filter input').focus();
         }
     });
 
+    //
+    // Keyboard shortcut - 'ctrl+left', 'ctrl+right', 'up', 'down'
+    // These shortcuts offer sidebar navigation via keyboard,
+    // *only* when sidebar or any element within has focus.
+    //
     $('#sidebar').keydown(function(e) {
-        // Cache variables
         var $this = $(this);
 
         // Determine if the control/command key was pressed
-        if (e.ctrlKey) {
-            if (e.keyCode === 37) { // left arrow
+        if(e.ctrlKey){
+            if(e.keyCode === 37){ // left arrow
                 $('#main-nav li a:first').tab('show');
-            } else if (e.keyCode === 39) { // right arrow
+            } else if(e.keyCode === 39){ // right arrow
                 $('#main-nav li a:last').tab('show');
             }
         } else {
-            if (e.keyCode === 40) { // down arrow
+            if(e.keyCode === 40){ // down arrow
                 if ($('#api-tabview-filter input').is(':focus')) {
                     // Scenario 1: We're focused on the search input; move down to the first li
                     $this.find('.tab-content .tab-pane.active li:first a').focus();
@@ -149,15 +160,15 @@ $(function() {
                                     .parent('li').index() + 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
-                e.preventDefault();
-            } else if (e.keyCode === 38) { // up arrow
-                if ($('#api-tabview-filter input').is(':focus')) {
+                e.preventDefault(); // Stop page from scrolling
+            } else if (e.keyCode === 38){ // up arrow
+                if($('#api-tabview-filter input').is(':focus')) {
                     // Scenario 1: We're focused on the search input; move down to the last li
                     $this.find('.tab-content .tab-pane.active li:last a').focus();
-                } else if ($this.find('.tab-content .tab-pane.active li:first a').is(':focus')) {
+                }else if($this.find('.tab-content .tab-pane.active li:first a').is(':focus')){
                     // Scenario 2: We're focused on the first li; move up to search input
                     $('#api-tabview-filter input').focus();
-                } else {
+                }else{
                     // Scenario 3: We're in the list but not on the first element, simply move up
                     nextIndex = $this
                                     .find('.tab-content .tab-pane.active li')
@@ -165,7 +176,7 @@ $(function() {
                                     .parent('li').index() - 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
-                e.preventDefault();
+                e.preventDefault(); // Stop page from scrolling
             }
         }
     })
@@ -176,7 +187,7 @@ $(function() {
     // ************************************************************************* //
 
     setUpActiveTab();
-    bindEventsForPage();
+    setUpOptionsCheckboxes();
     setUpWidgets();
 
 });

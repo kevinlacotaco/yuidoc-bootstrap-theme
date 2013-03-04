@@ -14,15 +14,16 @@
 <body class="yui3-skin-sam" style="padding-top:40px;">
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
-        <a class="brand" href="/" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
+        <h1 class="brand" style="padding: 10px 16px 10px; height: 20px; line-height: 20px; margin-left: 0;">
         {{#if projectLogo}}
-	    <img src="{{projectLogo}}" style="height:20px;" title="{{projectName}}">
+	    <img alt="{{projectName}}" src="{{projectLogo}}" style="max-height: 65%;" title="{{projectName}}">
         {{else}}
-	    <img src="{{projectAssets}}/css/logo.png" style="height:20px;" title="{{projectName}}">
+	    <img alt="{{projectName}}" src="{{projectAssets}}/css/logo.png" style="max-height: 65%;" title="{{projectName}}">
         {{/if}}
             {{projectName}}
-        </a>
+        </h1>
 	<div class="nav">
+            <li class="divider-vertical"></li>
             <li>
                 <p class="navbar-text">
                     API Docs for Version: <b>{{projectVersion}}</b>
