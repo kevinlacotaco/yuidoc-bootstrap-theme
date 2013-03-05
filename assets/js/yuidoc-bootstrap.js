@@ -1,4 +1,6 @@
+/* global $:true */
 $(function() {
+    'use strict';
 
     // ************************************************************************* //
     //  HTML templates
@@ -19,8 +21,8 @@ $(function() {
 
     function setUpOptionsCheckboxes() {
         if(localStorage.getItem('options')){
-            var optionsArr = JSON.parse(localStorage['options']);
-            var optionsForm = $('#options-form');
+            var optionsArr = JSON.parse(localStorage.options),
+                optionsForm = $('#options-form');
 
             for(var i=0;i<optionsArr.length;i++){
                 var box = optionsForm.find('input:checkbox').eq(i);
@@ -34,17 +36,17 @@ $(function() {
         var sideSource = [], navbarSource = [], sidebarSearch, navbarSearch;
 
         $('#sidebar .tab-pane.active li a').each(function(index, elem) {
-             sideSource.push($(elem).text());
+            sideSource.push($(elem).text());
         });
         $('#sidebar .tab-pane li a').each(function(index, elem) {
-             navbarSource.push($(elem).text());
+            navbarSource.push($(elem).text());
         });
 
         sidebarSearch = $('#sidebar input[type="search"]');
         sidebarSearch.typeahead({
             updater : function(item) {
-                 $('#sidebar .tab-pane.active a:contains(' + item + ')')[0].click();
-                 return item;
+                $('#sidebar .tab-pane.active a:contains(' + item + ')')[0].click();
+                return item;
             }
         });
         sidebarSearch.data('typeahead').source = sideSource;
@@ -66,7 +68,6 @@ $(function() {
 
     function setOptionDisplayState(box) {
         var cssName = $.trim(box.parent('label').text()).toLowerCase();
-        console.log(cssName);
         if(box.is(':checked')){
             $('div.'+cssName).css('display', 'block');
             $('li.'+cssName).css('display', 'block');
@@ -78,7 +79,7 @@ $(function() {
 
     $('[data-tabid]').on('click', function(event) {
         var tabToActivate = $(this).attr('data-tabid'),
-            anchor = $(this).attr('data-anchor');
+        anchor = $(this).attr('data-anchor');
         event.preventDefault();
         $('[data-toggle=tab][href="'+ tabToActivate + '"]').click();
         $(document).scrollTop( $(anchor).offset().top );
@@ -93,7 +94,7 @@ $(function() {
     //
     $('#main-nav li').on('click', function(e) {
         e.preventDefault();
-        localStorage['main-nav'] = $(this).find('a').attr('href'); 
+        localStorage['main-nav'] = $(this).find('a').attr('href');
     });
 
     //
@@ -111,11 +112,11 @@ $(function() {
         setOptionDisplayState($(this));
 
         // Update localstorage
-        var optionsArr = []
+        var optionsArr = [];
         $('#options-form input:checkbox').each(function(i,el) {
             optionsArr.push($(el).is(':checked'));
         });
-        localStorage['options'] = JSON.stringify(optionsArr);
+        localStorage.options = JSON.stringify(optionsArr);
     });
 
     //
@@ -134,6 +135,7 @@ $(function() {
     // These shortcuts offer sidebar navigation via keyboard,
     // *only* when sidebar or any element within has focus.
     //
+    var nextIndex;
     $('#sidebar').keydown(function(e) {
         var $this = $(this);
 
@@ -155,9 +157,9 @@ $(function() {
                 } else {
                     // Scenario 3: We're in the list but not on the last element, simply move down
                     nextIndex = $this
-                                    .find('.tab-content .tab-pane.active li')
-                                    .find('a:focus')
-                                    .parent('li').index() + 1;
+                    .find('.tab-content .tab-pane.active li')
+                    .find('a:focus')
+                    .parent('li').index() + 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
                 e.preventDefault(); // Stop page from scrolling
@@ -171,15 +173,15 @@ $(function() {
                 }else{
                     // Scenario 3: We're in the list but not on the first element, simply move up
                     nextIndex = $this
-                                    .find('.tab-content .tab-pane.active li')
-                                    .find('a:focus')
-                                    .parent('li').index() - 1;
+                    .find('.tab-content .tab-pane.active li')
+                    .find('a:focus')
+                    .parent('li').index() - 1;
                     $this.find('.tab-content .tab-pane.active li:eq('+nextIndex+') a').focus();
                 }
                 e.preventDefault(); // Stop page from scrolling
             }
         }
-    })
+    });
 
 
     // ************************************************************************* //
