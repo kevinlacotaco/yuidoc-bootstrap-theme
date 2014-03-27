@@ -77,13 +77,59 @@ $(function() {
         }
     }
 
+    function scrollToAnchor($anchor) {
+        var navbarHeight = $('.navbar-fixed-top').outerHeight(true);
+        $(document).scrollTop( $anchor.offset().top - navbarHeight);
+    }
+
+    $('[data-toggle=tab]').on('click', function (event, extraArgs) {
+        // Why?  If responding to the click of a link or hashchange already, we really
+        //  don't want to change window hash
+        if (extraArgs && extraArgs.ignore === true) {
+            return;
+        }
+        window.location.hash = $(this).attr('href');
+    });
+
     $('[data-tabid]').on('click', function(event) {
         var tabToActivate = $(this).attr('data-tabid'),
         anchor = $(this).attr('data-anchor');
         event.preventDefault();
+
         $('[data-toggle=tab][href="'+ tabToActivate + '"]').click();
-        $(document).scrollTop( $(anchor).offset().top );
+        scrollToAnchor($(anchor));
+        window.location.hash = anchor;
     });
+
+    function moveToWindowHash() {
+        var hash = window.location.hash,
+            $anchor = $(hash),
+            tabToActivate = hash,
+            $tabToActivate = false;
+
+        if (!hash) {
+            return;
+        }
+
+        if (hash.match(/^#method_/)) {
+            tabToActivate = '#methods';
+        }
+        else if (hash.match(/^#property_/)) {
+            tabToActivate = '#properties';
+        }
+        else if (hash.match(/^#event_/)) {
+            tabToActivate = '#event';
+        }
+
+        $tabToActivate = $('[data-toggle=tab][href="'+ tabToActivate + '"]');
+        if ($tabToActivate.length) {
+            $tabToActivate.trigger('click', { ignore: true });
+        }
+
+        if ($anchor.length) {
+            scrollToAnchor($(hash));
+        }
+    }
 
     // ************************************************************************* //
     //  Initializations + Event listeners
@@ -183,6 +229,10 @@ $(function() {
         }
     });
 
+    function setUpHashChange() {
+        $(window).on('hashchange', moveToWindowHash);
+    }
+
 
     // ************************************************************************* //
     //  Immediate function calls
@@ -191,5 +241,9 @@ $(function() {
     setUpActiveTab();
     setUpOptionsCheckboxes();
     setUpWidgets();
+    setUpHashChange();
+    if (window.location.hash) {
+        moveToWindowHash();
+    }
 
 });
