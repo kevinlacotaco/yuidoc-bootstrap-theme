@@ -103,9 +103,9 @@ $(function() {
 
     function moveToWindowHash() {
         var hash = window.location.hash,
-            $anchor = $(hash),
             tabToActivate = hash,
-            $tabToActivate = false;
+            $tabToActivate = false,
+            $scroll = $(hash);
 
         if (!hash) {
             return;
@@ -120,14 +120,19 @@ $(function() {
         else if (hash.match(/^#event_/)) {
             tabToActivate = '#event';
         }
+        else if (hash.match(/#l\d+/)) {
+            var lineNumber = /#l(\d+)/.exec(hash)[1];
+            var whichLi = parseInt(lineNumber, 10) - 1; //e.g. line 1 is 0th element
+            $scroll = $('ol.linenums > li').eq(whichLi);
+        }
 
         $tabToActivate = $('[data-toggle=tab][href="'+ tabToActivate + '"]');
         if ($tabToActivate.length) {
             $tabToActivate.trigger('click', { ignore: true });
         }
 
-        if ($anchor.length) {
-            scrollToAnchor($(hash));
+        if ($scroll.length) {
+            scrollToAnchor($scroll);
         }
     }
 
