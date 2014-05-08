@@ -1,7 +1,10 @@
 yuidoc-bootstrap-theme
 ======================
 
-A revamped yuidoc theme with bootstrap
+A revamped yuidoc theme with bootstrap.
+
+Grab from npm via:
+     npm install yuidoc-bootstrap-theme
 
 When running yuidoc from command line:
     -t : themedir
