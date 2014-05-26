@@ -56,6 +56,20 @@ BasicClass.prototype = {
     },
 
     /**
+     * A namespaced method.
+     *
+     * @method a.method
+     */
+    aMethod: function () {},
+
+    /**
+     * Another namespaced method.
+     *
+     * @method z.method
+     */
+    zMethod: function () {},
+
+    /**
      * Another simple method to take up space.
      *
      * @method simpleA
