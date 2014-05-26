@@ -97,7 +97,10 @@ $(function() {
         event.preventDefault();
 
         $('[data-toggle=tab][href="'+ tabToActivate + '"]').click();
-        scrollToAnchor($(anchor));
+        // ...huh?  http://stackoverflow.com/a/9930611
+        // otherwise, can't select an element by ID if the ID has a '.' in it
+        var scrollAnchor = anchor.replace(/\./g, '\\.');
+        scrollToAnchor($(scrollAnchor));
         window.location.hash = anchor;
     });
 
