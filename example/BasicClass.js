@@ -2,6 +2,13 @@
 /**
  * This file represents a basic class in JS.
  *
+ * Here's a code sample:
+ *
+ *     (function() {
+ *         // I'm an IIFE!  So let's win everything:
+ *         window.winEverything();
+ *     }());
+ *
  * @class BasicClass
  * @module Classes
  */
