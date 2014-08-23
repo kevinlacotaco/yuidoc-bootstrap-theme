@@ -38,30 +38,28 @@ $(function() {
         $('#sidebar .tab-pane.active li a').each(function(index, elem) {
             sideSource.push($(elem).text());
         });
-        $('#sidebar .tab-pane li a').each(function(index, elem) {
-            navbarSource.push($(elem).text());
-        });
-
         sidebarSearch = $('#sidebar input[type="search"]');
         sidebarSearch.typeahead({
+            source: sideSource,
             updater : function(item) {
                 $('#sidebar .tab-pane.active a:contains(' + item + ')')[0].click();
                 return item;
             }
         });
-        sidebarSearch.data('typeahead').source = sideSource;
 
+        $('#sidebar .tab-pane li a').each(function(index, elem) {
+            var $el = $(elem),
+                type = $el.parents('.tab-pane').is('#classes') ? 'classes/' : 'modules/';
+            navbarSource.push(type + $el.text());
+        });
         navbarSearch = $('.navbar input');
-
         navbarSearch.typeahead({
-            source : navbarSearch.data('obj'),
-            matcher : function(item) {
-                var regex = new RegExp(this.query, 'ig');
-
-                return regex.test(item.split('/')[1]);
-            },
+            source : navbarSource,
             updater : function(item) {
-                window.location.assign(location.protocol + "//" + location.host + '/' + item + '.html');
+                var type = item.split('/')[0], name = item.split('/')[1],
+                    $parent = $('#sidebar .tab-pane#' + type);
+                $parent.find('a:contains(' + name + ')')[0].click();
+                return item;
             }
         });
     }
