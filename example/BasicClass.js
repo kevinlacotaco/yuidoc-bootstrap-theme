@@ -9,6 +9,8 @@
  *         window.winEverything();
  *     }());
  *
+ * And whenever you want to have whatever `this styling` is, just use those backticks!
+ *
  * @class BasicClass
  * @module Classes
  */
