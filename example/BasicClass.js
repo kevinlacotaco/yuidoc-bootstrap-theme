@@ -2,6 +2,15 @@
 /**
  * This file represents a basic class in JS.
  *
+ * Here's a code sample:
+ *
+ *     (function() {
+ *         // I'm an IIFE!  So let's win everything:
+ *         window.winEverything();
+ *     }());
+ *
+ * And whenever you want to have whatever `this styling` is, just use those backticks!
+ *
  * @class BasicClass
  * @module Classes
  */
